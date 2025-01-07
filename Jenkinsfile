@@ -17,6 +17,16 @@ pipeline {
                 }
         }
         
+        stage ('flask install'){
+                steps {
+                sh "sudo apt install python3-flask"
+                }
+        }
+        stage ('Pytest install'){
+                steps {
+                sh "sudo apt install python3-pytest"
+                }
+        }
         stage ('Test'){
                 steps {
                 sh "pytest testroutes.py"
