@@ -19,12 +19,12 @@ pipeline {
         
         stage ('flask install'){
                 steps {
-                sh "sudo apt install python3-flask"
+                sh 'sudo apt install -y python3-flask'
                 }
         }
         stage ('Pytest install'){
                 steps {
-                sh "sudo apt install python3-pytest"
+                sh "sudo apt install -y python3-pytest"
                 }
         }
         stage ('Test'){
