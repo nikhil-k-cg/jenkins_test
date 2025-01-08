@@ -17,15 +17,15 @@ pipeline {
                 }
         }
         
-        stage ('flask install'){
-                steps {
-                sh 'sudo apt install -y python3-flask'
-                }
-        }
-        stage ('Pytest install'){
-                steps {
-                sh "sudo apt install -y python3-pytest"
-                }
+        // stage ('flask install'){
+        //         steps {
+        //         sh 'sudo apt install -y python3-flask'
+        //         }
+        // }
+        // stage ('Pytest install'){
+        //         steps {
+        //         sh "sudo apt install -y python3-pytest"
+        //         }
         }
         stage ('Test'){
                 steps {
