@@ -26,7 +26,7 @@ pipeline {
         //         steps {
         //         sh "sudo apt install -y python3-pytest"
         //         }
-        }
+        // }
         stage ('Test'){
                 steps {
                 sh "pytest testroutes.py"
