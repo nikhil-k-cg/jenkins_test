@@ -3,7 +3,7 @@ pipeline {
     environment {
         // registry = "nikhil1289/jenkins_test" //To push an image to Docker Hub, you must first name your local image using your Docker Hub username and the repository name that you created through Docker Hub on the web.
         REGISTRY = 'https://registry.hub.docker.com'
-        docker_repo = "nikhil1289/jenkins_test
+        docker_repo = "nikhil1289/jenkins_test"
         registryCredential = 'DOCKERHUB'
         githubCredential = 'GITHUB'
         dockerImage = ''
