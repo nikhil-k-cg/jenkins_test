@@ -35,8 +35,8 @@ pipeline {
                     img = IMAGE_NAME + ":${env.BUILD_ID}"
                     println ("${img}")
                     //dockerImage = docker.build("${img}")
-                    def dockerImage = docker.build("${IMAGE_NAME}:${TAG}")
-                    // "docker build -t ${img} ."
+                    // def dockerImage = docker.build("${IMAGE_NAME}:${TAG}")
+                    sh "docker build -t ${img} ."
                 }
             }
         }
