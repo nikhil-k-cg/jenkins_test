@@ -49,7 +49,7 @@ pipeline {
 
     environment {
         IMAGE_NAME = 'nikhil1289/jenkins_test'  
-        TAG = 'latest'
+        TAG = '24'
         registryCredential = 'DOCKERHUB'  // Jenkins credentials ID
     }
 
