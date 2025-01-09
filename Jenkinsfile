@@ -71,7 +71,7 @@ pipeline {
         stage('Login to Docker Registry') {
             steps {
                 script {
-                    docker.withRegistry("https://$DOCKER_REGISTRY", "$DOCKER_CREDENTIALS_ID") {
+                    docker.withRegistry("$DOCKER_REGISTRY", "$DOCKER_CREDENTIALS_ID") {
                         // Login to Docker registry
                     }
                 }
