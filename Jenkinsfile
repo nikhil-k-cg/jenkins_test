@@ -79,8 +79,8 @@ pipeline {
                 script {
                     // docker.withRegistry('https://registry.hub.docker.com', 'DOCKERHUB') {
                     //     dockerImage.push()
+                    // }
                     sh "docker push ${IMAGE_NAME}:${TAG}"
-                    }
                 }
             }
         }
