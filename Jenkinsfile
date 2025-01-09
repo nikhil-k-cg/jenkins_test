@@ -1,7 +1,8 @@
 def img
 pipeline {
     environment {
-        registry = "nikhil1289/jenkins_test" //To push an image to Docker Hub, you must first name your local image using your Docker Hub username and the repository name that you created through Docker Hub on the web.
+        // registry = "nikhil1289/jenkins_test" //To push an image to Docker Hub, you must first name your local image using your Docker Hub username and the repository name that you created through Docker Hub on the web.
+        registry = 'https://registry.hub.docker.com'
         registryCredential = 'DOCKERHUB'
         githubCredential = 'GITHUB'
         dockerImage = ''
@@ -64,7 +65,9 @@ pipeline {
         stage('Push To DockerHub') {
             steps {
                 script {
-                    docker.withRegistry( 'https://registry.hub.docker.com ', registryCredential ) {
+                    // docker.withRegistry( 'https://registry.hub.docker.com ', registryCredential ) {
+                    //     dockerImage.push()
+                    docker.withRegistry("${REGISTRY}", "${registryCredential}") {
                         dockerImage.push()
                     }
                 }
