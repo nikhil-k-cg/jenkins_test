@@ -48,14 +48,13 @@ pipeline {
 
     environment {
         DOCKER_IMAGE = 'nikhil1289/jenkins_test'
-        DOCKER_REGISTRY = 'https://registry.hub.docker.com' // e.g., 'docker.io', 'myregistry.example.com'
-        DOCKER_CREDENTIALS_ID = 'DOCKERHUB' // Jenkins credentials ID for Docker registry credentials
+        DOCKER_REGISTRY = 'docker.io' // Default registry (Docker Hub)
+        DOCKER_CREDENTIALS_ID = 'docker-credentials-id' // Jenkins credentials ID for Docker registry credentials
     }
 
     stages {
         stage('Checkout') {
             steps {
-                // Checkout the code from the repository
                 checkout scm
             }
         }
@@ -72,9 +71,8 @@ pipeline {
         stage('Login to Docker Registry') {
             steps {
                 script {
-                    // Login to the Docker registry using stored credentials
                     docker.withRegistry("https://$DOCKER_REGISTRY", "$DOCKER_CREDENTIALS_ID") {
-                        // Credentials will be picked from Jenkins credentials store
+                        // Login to Docker registry
                     }
                 }
             }
