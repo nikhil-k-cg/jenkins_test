@@ -54,15 +54,16 @@ pipeline {
         //     }
         // }
 
-        // stage('Build Image') {
-        //     steps {
-        //         script {
-        //             img = registry + ":${env.BUILD_ID}"
-        //             println ("${img}")
-        //             dockerImage = docker.build("${img}")
-        //         }
-        //     }
-        // }
+        stage('Push Docker Image') {
+            steps {
+                script {
+                    // Push the Docker image to Docker Hub
+                    docker.withRegistry("${REGISTRY}", "${registryCredential}") {
+                        dockerImage.push()
+                    }
+                }
+            }
+        }
 
         // stage('Push To DockerHub') {
         //     steps {
