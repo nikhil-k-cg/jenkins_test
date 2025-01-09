@@ -63,7 +63,7 @@ pipeline {
             steps {
                 script {
                     // Build the Docker image
-                    sh 'docker build -t $DOCKER_REGISTRY/$DOCKER_IMAGE:$BUILD_NUMBER .'
+                    sh 'docker build -t $DOCKER_IMAGE:$BUILD_NUMBER .'
                 }
             }
         }
@@ -83,7 +83,7 @@ pipeline {
                 script {
                     // Push the Docker image to the registry
                     docker.withRegistry("https://$DOCKER_REGISTRY", "$DOCKER_CREDENTIALS_ID") {
-                        sh "docker push $DOCKER_REGISTRY/$DOCKER_IMAGE:$BUILD_NUMBER"
+                        sh "docker push $DOCKER_IMAGE:$BUILD_NUMBER"
                     }
                 }
             }
