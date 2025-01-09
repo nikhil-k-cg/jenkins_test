@@ -10,7 +10,6 @@ pipeline {
     }
     agent any
     stages {
-        
         stage('checkout') {
             steps {
                 git branch: 'master',
@@ -18,7 +17,6 @@ pipeline {
                 url: 'https://github.com/nikhil-k-cg/jenkins_test.git'
             }
         }
-        
         stage('Build Image') {
             steps {
                 script {
@@ -30,7 +28,6 @@ pipeline {
                 }
             }
         }
-
         stage('Push Docker Image') {
             steps {
                 script {
@@ -39,11 +36,11 @@ pipeline {
                     }
                 }
             }
-        }
-                    
+        }       
         stage('Deploy') {
             steps {
                 sh label: '', script: "docker run -d --name ${JOB_NAME} -p 5000:5000 ${img}"
             }
         }
     }
+}
