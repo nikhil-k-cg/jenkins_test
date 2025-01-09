@@ -82,7 +82,7 @@ pipeline {
             steps {
                 script {
                     // Push the Docker image to the registry
-                    docker.withRegistry("https://$DOCKER_REGISTRY", "$DOCKER_CREDENTIALS_ID") {
+                    docker.withRegistry("$DOCKER_REGISTRY", "$DOCKER_CREDENTIALS_ID") {
                         sh "docker push $DOCKER_IMAGE:$BUILD_NUMBER"
                     }
                 }
