@@ -49,7 +49,7 @@ pipeline {
     environment {
         DOCKER_IMAGE = 'nikhil1289/jenkins_test'
         DOCKER_REGISTRY = 'docker.io' // Default registry (Docker Hub)
-        DOCKER_CREDENTIALS_ID = 'docker-credentials-id' // Jenkins credentials ID for Docker registry credentials
+        DOCKER_CREDENTIALS_ID = 'DOCKERHUB' // Jenkins credentials ID for Docker registry credentials
     }
 
     stages {
