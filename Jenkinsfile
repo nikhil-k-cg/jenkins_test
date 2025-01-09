@@ -27,6 +27,15 @@ pipeline {
         //         sh "sudo apt install -y python3-pytest"
         //         }
         // }
+        stage('Build Image') {
+            steps {
+                script {
+                    img = registry + ":${env.BUILD_ID}"
+                    println ("${img}")
+                    dockerImage = docker.build("${img}")
+                }
+            }
+        }
         stage ('Test'){
                 steps {
                 sh "pytest testroutes.py"
@@ -41,15 +50,15 @@ pipeline {
         //     }
         // }
 
-        stage('Build Image') {
-            steps {
-                script {
-                    img = registry + ":${env.BUILD_ID}"
-                    println ("${img}")
-                    dockerImage = docker.build("${img}")
-                }
-            }
-        }
+        // stage('Build Image') {
+        //     steps {
+        //         script {
+        //             img = registry + ":${env.BUILD_ID}"
+        //             println ("${img}")
+        //             dockerImage = docker.build("${img}")
+        //         }
+        //     }
+        // }
 
         stage('Push To DockerHub') {
             steps {
