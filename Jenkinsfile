@@ -64,17 +64,17 @@ pipeline {
         //     }
         // }
 
-        stage('Push To DockerHub') {
-            steps {
-                script {
-                    // docker.withRegistry( 'https://registry.hub.docker.com ', registryCredential ) {
-                    //     dockerImage.push()
-                    docker.withRegistry("${REGISTRY}", "${registryCredential}") {
-                        dockerImage.push()
-                    }
-                }
-            }
-        }
+        // stage('Push To DockerHub') {
+        //     steps {
+        //         script {
+        //             // docker.withRegistry( 'https://registry.hub.docker.com ', registryCredential ) {
+        //             //     dockerImage.push()
+        //             docker.withRegistry("${REGISTRY}", "${registryCredential}") {
+        //                 dockerImage.push()
+        //             }
+        //         }
+        //     }
+        // }
                     
         stage('Deploy') {
            steps {
