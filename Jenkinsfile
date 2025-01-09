@@ -43,32 +43,38 @@
 //         }
 //     }
 // }
-
 pipeline {
     agent any
 
     environment {
-        IMAGE_NAME = 'nikhil1289/jenkins_test'  
-        TAG = '24'
-        registryCredential = 'DOCKERHUB'  // Jenkins credentials ID
+        DOCKER_IMAGE = 'nikhil1289/jenkins_test'
+        DOCKER_REGISTRY = 'https://registry.hub.docker.com' // e.g., 'docker.io', 'myregistry.example.com'
+        DOCKER_CREDENTIALS_ID = 'DOCKERHUB' // Jenkins credentials ID for Docker registry credentials
     }
 
     stages {
+        stage('Checkout') {
+            steps {
+                // Checkout the code from the repository
+                checkout scm
+            }
+        }
 
         stage('Build Docker Image') {
             steps {
                 script {
-                    def dockerImage = docker.build("${IMAGE_NAME}:${TAG}")
+                    // Build the Docker image
+                    sh 'docker build -t $DOCKER_REGISTRY/$DOCKER_IMAGE:$BUILD_NUMBER .'
                 }
             }
         }
 
-        stage('Login to Docker Hub') {
+        stage('Login to Docker Registry') {
             steps {
                 script {
-                    // Explicitly log into Docker Hub using Jenkins credentials
-                    docker.withRegistry('https://registry.hub.docker.com', 'DOCKERHUB') {
-                        // Docker authentication happens here
+                    // Login to the Docker registry using stored credentials
+                    docker.withRegistry("https://$DOCKER_REGISTRY", "$DOCKER_CREDENTIALS_ID") {
+                        // Credentials will be picked from Jenkins credentials store
                     }
                 }
             }
@@ -77,8 +83,9 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                 script {
-                    docker.withRegistry('https://registry.hub.docker.com', 'DOCKERHUB') {
-                        dockerImage.push()
+                    // Push the Docker image to the registry
+                    docker.withRegistry("https://$DOCKER_REGISTRY", "$DOCKER_CREDENTIALS_ID") {
+                        sh "docker push $DOCKER_REGISTRY/$DOCKER_IMAGE:$BUILD_NUMBER"
                     }
                 }
             }
@@ -86,9 +93,11 @@ pipeline {
     }
 
     post {
-        always {
-            // Clean up the Docker image after push
-            sh "docker rmi ${IMAGE_NAME}:${TAG} || true"
+        success {
+            echo 'Docker image built and pushed successfully!'
+        }
+        failure {
+            echo 'Build or push failed!'
         }
     }
 }
