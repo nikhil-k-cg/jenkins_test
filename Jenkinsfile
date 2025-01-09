@@ -33,7 +33,6 @@ pipeline {
                 script {
                     // Push the Docker image to Docker Hub
                     sh "docker push ${img} "
-                    }
                 }
             }
         }       
@@ -43,3 +42,4 @@ pipeline {
             }
         }
     }
+}
