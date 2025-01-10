@@ -48,14 +48,17 @@ pipeline {
 
     environment {
         DOCKER_IMAGE = 'nikhil1289/jenkins_test'
-        DOCKER_REGISTRY = 'https://registry.hub.docker.com' // Default registry (Docker Hub)
+        DOCKER_REGISTRY = 'docker.io' // Default registry (Docker Hub)
         DOCKER_CREDENTIALS_ID = 'DOCKERHUB' // Jenkins credentials ID for Docker registry credentials
+        githubCredential = 'GITHUB'
     }
 
     stages {
         stage('Checkout') {
             steps {
-                checkout scm
+                git branch: 'master',
+                credentialsId: githubCredential,
+                url: 'https://github.com/nikhil-k-cg/jenkins_test.git'
             }
         }
 
@@ -71,8 +74,12 @@ pipeline {
         stage('Login to Docker Registry') {
             steps {
                 script {
-                    docker.withRegistry("$DOCKER_REGISTRY", "$DOCKER_CREDENTIALS_ID") {
+                    //docker.withRegistry("$DOCKER_REGISTRY", "$DOCKER_CREDENTIALS_ID") {
                         // Login to Docker registry
+                         withCredentials([usernamePassword(credentialsId: DOCKER_CREDENTIALS_ID, usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+                        sh '''
+                            echo $DOCKER_PASSWORD | docker login $DOCKER_REGISTRY -u $DOCKER_USERNAME --password-stdin
+                        '''
                     }
                 }
             }
@@ -82,9 +89,10 @@ pipeline {
             steps {
                 script {
                     // Push the Docker image to the registry
-                    docker.withRegistry("$DOCKER_REGISTRY", "$DOCKER_CREDENTIALS_ID") {
-                        sh "docker push $DOCKER_IMAGE:$BUILD_NUMBER"
-                    }
+                    // docker.withRegistry("$DOCKER_REGISTRY", "$DOCKER_CREDENTIALS_ID") {
+                    //     sh "docker push $DOCKER_IMAGE:$BUILD_NUMBER"
+                    // }
+                    sh "docker push $DOCKER_IMAGE:$BUILD_NUMBER"
                 }
             }
         }
