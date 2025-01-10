@@ -96,6 +96,14 @@ pipeline {
                 }
             }
         }
+        
+        stage('Docker run') {
+            steps{
+                script {
+                    sh "docker run -d -p 5000:5000 $DOCKER_IMAGE:$BUILD_NUMBER"
+                }
+            }
+        }
     }
 
     post {
