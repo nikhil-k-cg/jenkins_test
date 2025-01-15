@@ -65,7 +65,7 @@ pipeline {
             steps {
                 script {
                     // Use SonarQube environment for scanning
-                    withSonarQubeEnv('SonarQube') {
+                    withSonarQubeEnv('SonarScanner') {
                         def scannerHome = tool name: 'SonarScanner', type: 'ToolType'
                         sh "${scannerHome}/bin/sonar-scanner"
                     }
