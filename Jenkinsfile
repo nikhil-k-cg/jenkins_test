@@ -62,12 +62,14 @@ pipeline {
             }
         }
         stage('SonarQube Analysis') {
-            script {
+            steps {
+                script {
                     // Use SonarQube environment for scanning
                     withSonarQubeEnv('SonarQube') {
                         def scannerHome = tool name: 'SonarScanner', type: 'ToolType'
                         sh "${scannerHome}/bin/sonar-scanner"
                     }
+                }
             }
         }
         stage('Build Docker Image') {
